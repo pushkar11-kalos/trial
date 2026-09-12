@@ -1,0 +1,193 @@
+{
+  "name": "PC Rules 2011 + Amendments — Demo v1",
+  "version": "v1",
+  "description": "Prototype rule pack for hackathon demonstration purposes only. Verify against active official legal instruments before operational enforcement. Rule conditions, dates, exemptions, and measurement methods have NOT been independently re-verified against the current, amended official text of the Legal Metrology (Packaged Commodities) Rules, 2011 and must be confirmed before any operational use.",
+  "effective_from": "2011-01-01",
+  "rules": [
+    {
+      "rule_code": "RULE-NAME-001",
+      "name": "Generic/Common Name",
+      "description": "The package must declare the generic or common name of the commodity.",
+      "category": "Product Identity",
+      "severity": "MAJOR",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["generic_name"],
+      "validation_logic": {"check": "field_present", "field": "generic_name"},
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "A generic/common name declaration must be present on the package.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing the generic/common name declaration. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 1
+    },
+    {
+      "rule_code": "RULE-MFR-002",
+      "name": "Manufacturer/Packer/Importer Name",
+      "description": "The package must declare the name of the manufacturer, packer, or importer.",
+      "category": "Manufacturer Identity",
+      "severity": "MAJOR",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["manufacturer_name"],
+      "validation_logic": {"check": "field_present", "field": "manufacturer_name"},
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "The name of the manufacturer, packer, or importer must be present on the package.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing manufacturer/packer/importer identity. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 2
+    },
+    {
+      "rule_code": "RULE-ADDR-003",
+      "name": "Manufacturer/Packer/Importer Address",
+      "description": "The package must declare the address of the manufacturer, packer, or importer.",
+      "category": "Manufacturer Identity",
+      "severity": "MAJOR",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["address"],
+      "validation_logic": {"check": "field_present", "field": "address"},
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "The address of the manufacturer, packer, or importer must be present on the package.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing manufacturer/packer/importer address. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 3
+    },
+    {
+      "rule_code": "RULE-COO-004",
+      "name": "Country of Origin",
+      "description": "Imported products must declare the country of origin.",
+      "category": "Import Compliance",
+      "severity": "CRITICAL",
+      "applicability": "the product's supply type is Imported",
+      "required_fields": ["country_of_origin"],
+      "validation_logic": {
+        "check": "conditional_field_present",
+        "field": "country_of_origin",
+        "condition": {"source": "product", "attr": "supply_type", "equals": "IMPORTED"}
+      },
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "For imported products, the country of origin must be declared.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing country-of-origin declarations for imported packages. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 4
+    },
+    {
+      "rule_code": "RULE-NETQTY-005",
+      "name": "Net Quantity",
+      "description": "The package must declare net quantity as a numeric value with a standard unit of measurement.",
+      "category": "Quantity Declaration",
+      "severity": "CRITICAL",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["net_quantity"],
+      "validation_logic": {
+        "check": "field_present_regex",
+        "field": "net_quantity",
+        "pattern": "\\d+(\\.\\d+)?\\s?(g|kg|ml|l|gm|gms|kgs|pcs|ltr)\\b"
+      },
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "Net quantity must be declared with a numeric value and a standard unit of measurement.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing net quantity declarations and standard units. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 5
+    },
+    {
+      "rule_code": "RULE-MRP-006",
+      "name": "Maximum Retail Price (MRP)",
+      "description": "The package must declare MRP as a numeric amount, inclusive of all taxes.",
+      "category": "Price Declaration",
+      "severity": "CRITICAL",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["mrp"],
+      "validation_logic": {"check": "mrp_check", "field": "mrp"},
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "MRP must be declared as a numeric amount, inclusive of all taxes.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing MRP declaration and inclusive-of-taxes wording. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 6
+    },
+    {
+      "rule_code": "RULE-MFGDATE-007",
+      "name": "Manufacturing / Packing / Import Date",
+      "description": "The package must declare the month and year (or date) of manufacture, packing, or import.",
+      "category": "Date Declaration",
+      "severity": "MAJOR",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["mfg_date"],
+      "validation_logic": {"check": "field_present_date", "field": "mfg_date"},
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "The manufacturing, packing, or import date must be declared and must be a valid, parseable date.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing manufacturing/packing/import date declarations. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 7
+    },
+    {
+      "rule_code": "RULE-BB-008",
+      "name": "Best Before / Use By Date",
+      "description": "Applicable categories must declare a best-before or use-by date.",
+      "category": "Date Declaration",
+      "severity": "MAJOR",
+      "applicability": "the product's category is Food & Beverages, Cosmetics & Personal Care, or Pharmaceuticals (OTC)",
+      "required_fields": ["best_before"],
+      "validation_logic": {
+        "check": "conditional_field_present_date",
+        "field": "best_before",
+        "condition": {
+          "source": "product",
+          "attr": "category",
+          "in": ["Food & Beverages", "Cosmetics & Personal Care", "Pharmaceuticals (OTC)"]
+        }
+      },
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "For applicable categories, a best-before or use-by date must be declared and must be a valid, parseable date.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing best-before/use-by declarations for applicable categories. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 8
+    },
+    {
+      "rule_code": "RULE-CARE-009",
+      "name": "Consumer / Customer Care Details",
+      "description": "The package must declare a consumer/customer care contact.",
+      "category": "Consumer Information",
+      "severity": "MINOR",
+      "applicability": "Applies to all packaged commodities regardless of category or supply type.",
+      "required_fields": ["consumer_care"],
+      "validation_logic": {"check": "field_present", "field": "consumer_care"},
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "Consumer/customer care contact details must be present on the package.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing consumer care declarations. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 9
+    },
+    {
+      "rule_code": "RULE-USP-010",
+      "name": "Unit Sale Price",
+      "description": "Multi-piece packages must declare the unit sale price per piece.",
+      "category": "Price Declaration",
+      "severity": "MINOR",
+      "applicability": "the declared net quantity indicates a multi-piece pack (e.g. '6 x 25 g')",
+      "required_fields": ["unit_sale_price", "net_quantity"],
+      "validation_logic": {
+        "check": "conditional_field_present",
+        "field": "unit_sale_price",
+        "condition": {"source": "declaration", "field": "net_quantity", "regex": "\\d+\\s*[xX]\\s*\\d+"}
+      },
+      "review_required": false,
+      "counts_toward_score": true,
+      "expected_condition": "For multi-piece packages, the unit sale price per piece must be declared.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provision governing unit sale price for multi-piece packages. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 10
+    },
+    {
+      "rule_code": "RULE-READ-011",
+      "name": "Declaration Readability & Font Size",
+      "description": "Declaration text must be prominent and legible; minimum font-size/height rules apply to several declarations.",
+      "category": "Measurement & Readability (Advisory)",
+      "severity": "INFO",
+      "applicability": "Applies to all packaged commodities; always shown for officer verification and excluded from the automated compliance score.",
+      "required_fields": [],
+      "validation_logic": {"check": "always_review"},
+      "review_required": true,
+      "counts_toward_score": false,
+      "expected_condition": "Declaration text must meet applicable font-size and prominence requirements, verified via calibrated measurement.",
+      "source_reference": "Legal Metrology (Packaged Commodities) Rules, 2011 (as amended) — provisions governing minimum declaration font size/height. Prototype rule pack — verify against active official legal instruments before operational enforcement.",
+      "display_order": 11
+    }
+  ]
+}

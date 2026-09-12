@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+storage/uploads/*
+storage/demo_assets/*
+metracheck.db
+.env
